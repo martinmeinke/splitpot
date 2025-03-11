@@ -14,6 +14,15 @@
   let allVoted = $derived(room.users.length > 0 && room.users.every(user => user.vote !== null));
   let averageVote = $derived(calculateAverage());
   
+  // Watch for changes to room.revealed, reset selectedValue when votes are reset
+  $effect(() => {
+    // If votes are reset (revealed changes from true to false)
+    if (!room.revealed) {
+      // Reset the selected card in the UI
+      selectedValue = null;
+    }
+  });
+  
   function calculateAverage() {
     if (!room.revealed || room.users.length === 0) return null;
     
@@ -73,14 +82,18 @@
           <div class="mb-3">
             <button 
               class="btn btn-primary me-2" 
-              onclick={() => dispatch('reveal')}
+              onclick={() => {
+                dispatch('reveal');
+              }}
               disabled={room.revealed}
             >
               Reveal Votes
             </button>
             <button 
               class="btn btn-secondary" 
-              onclick={() => dispatch('reset')}
+              onclick={() => {
+                dispatch('reset');
+              }}
               disabled={!room.revealed}
             >
               Reset Votes

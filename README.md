@@ -23,7 +23,7 @@ A real-time Split Pot application built with Svelte and Socket.io.
 1. Clone the repository:
    ```
    git clone https://github.com/martinmeinke/splitpot.git
-   cd poke
+   cd splitpot
    ```
 
 2. Install dependencies:
