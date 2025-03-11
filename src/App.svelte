@@ -4,6 +4,9 @@
   import JoinRoom from "./lib/JoinRoom.svelte";
   import PokerRoom from "./lib/PokerRoom.svelte";
 
+  // Get the initialRoomId prop from main.js (URL parameter)
+  const { initialRoomId } = $props();
+
   // Reactive state using Svelte 5 Runes
   let socket = $state(null);
   let connected = $state(false);
@@ -15,6 +18,9 @@
     users: [],
     revealed: false,
   });
+  
+  // State to pass to JoinRoom component
+  let joinRoomId = $state(initialRoomId || "");
 
   // Card values
   const cardValues = ["1", "2", "3", "5", "8", "13", "21", "34", "?"];
@@ -149,7 +155,7 @@
       </ul>
     </div>
   {:else if !inRoom}
-    <JoinRoom on:join={joinRoom} />
+    <JoinRoom on:join={joinRoom} initialRoomId={joinRoomId} />
   {:else}
     <PokerRoom
       {room}

@@ -1,10 +1,13 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   const dispatch = createEventDispatcher();
   
+  // Get the initial roomId from URL parameter passed from App.svelte
+  const { initialRoomId } = $props();
+  
   // State variables using Svelte 5 runes
-  let roomId = $state('');
+  let roomId = $state(initialRoomId || '');
   let userName = $state('');
   let error = $state('');
 

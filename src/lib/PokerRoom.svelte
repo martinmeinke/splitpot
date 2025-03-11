@@ -14,12 +14,16 @@
   let allVoted = $derived(room.users.length > 0 && room.users.every(user => user.vote !== null));
   let averageVote = $derived(calculateAverage());
   
-  // Watch for changes to room.revealed, reset selectedValue when votes are reset
+  // Synchronize the selectedValue with the current user's vote
   $effect(() => {
-    // If votes are reset (revealed changes from true to false)
-    if (!room.revealed) {
-      // Reset the selected card in the UI
-      selectedValue = null;
+    if (currentUser) {
+      // If user has a vote, highlight that card
+      if (currentUser.vote !== null) {
+        selectedValue = currentUser.vote;
+      } else if (!hasVoted) {
+        // Only reset selection if the user hasn't voted
+        selectedValue = null;
+      }
     }
   });
   
@@ -37,12 +41,15 @@
   }
   
   function selectCard(value) {
+    // Prevent changing vote if votes are revealed
     if (room.revealed) return;
     
     if (selectedValue === value) {
+      // Deselect and clear vote
       selectedValue = null;
       dispatch('vote', null);
     } else {
+      // Select new value
       selectedValue = value;
       dispatch('vote', value);
     }
@@ -57,7 +64,22 @@
           <h5 class="mb-0">Room: {roomId}</h5>
           <small>Participants: {room.users.length}</small>
         </div>
-        <div>
+        <div class="d-flex align-items-center">
+          <button 
+            class="btn btn-outline-primary btn-sm me-2" 
+            onclick={() => {
+              // Create shareable URL with room ID
+              const url = new URL(window.location.href);
+              url.searchParams.set('room', roomId);
+              
+              // Copy to clipboard
+              navigator.clipboard.writeText(url.toString())
+                .then(() => alert('Room link copied to clipboard!'))
+                .catch(err => console.error('Failed to copy: ', err));
+            }}
+          >
+            Share Room
+          </button>
           <button class="btn btn-outline-danger btn-sm" onclick={() => dispatch('leave')}>
             Leave Room
           </button>
