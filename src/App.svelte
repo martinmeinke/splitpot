@@ -18,7 +18,7 @@
     users: [],
     revealed: false,
   });
-  
+
   // State to pass to JoinRoom component
   let joinRoomId = $state(initialRoomId || "");
 
@@ -140,20 +140,6 @@
         </div>
       {/if}
     </div>
-
-    <div class="alert alert-info mt-3">
-      <p><strong>Debug Information:</strong></p>
-      <p>If you're having trouble connecting, please try:</p>
-      <ul>
-        <li>
-          Opening <a href="http://localhost:8080/test.html" target="_blank"
-            >http://localhost:8080/test.html</a
-          > to test the connection directly
-        </li>
-        <li>Checking if the server is running on port 8080</li>
-        <li>Looking for errors in the browser console (F12)</li>
-      </ul>
-    </div>
   {:else if !inRoom}
     <JoinRoom on:join={joinRoom} initialRoomId={joinRoomId} />
   {:else}
@@ -168,4 +154,13 @@
       on:leave={leaveRoom}
     />
   {/if}
+
+  <div class="text-center mt-4">
+    <a href="https://github.com/martinmeinke/splitpot" target="_blank">
+      <img
+        src="https://img.shields.io/github/stars/martinmeinke/splitpot?style=social"
+        alt="GitHub Repo"
+      />
+    </a>
+  </div>
 </main>
