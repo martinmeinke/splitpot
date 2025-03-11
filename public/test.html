@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Test</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <button id="connect">Connect</button>
+    <button id="disconnect">Disconnect</button>
+
+    <script>
+        const statusElement = document.getElementById('status');
+        let socket;
+
+        document.getElementById('connect').addEventListener('click', () => {
+            statusElement.textContent = 'Connecting...';
+            
+            // Connect to the Socket.IO server
+            socket = io('http://localhost:8080', {
+                transports: ['websocket', 'polling'],
+                reconnection: true
+            });
+
+            // Connection events
+            socket.on('connect', () => {
+                statusElement.textContent = `Connected! Socket ID: ${socket.id}`;
+                console.log('Connected to server with ID:', socket.id);
+            });
+
+            socket.on('connect_error', (error) => {
+                statusElement.textContent = `Connection error: ${error.message}`;
+                console.error('Connection error:', error);
+            });
+
+            socket.on('disconnect', (reason) => {
+                statusElement.textContent = `Disconnected: ${reason}`;
+                console.log('Disconnected:', reason);
+            });
+        });
+
+        document.getElementById('disconnect').addEventListener('click', () => {
+            if (socket) {
+                socket.disconnect();
+                statusElement.textContent = 'Manually disconnected';
+            } else {
+                statusElement.textContent = 'No active connection';
+            }
+        });
+    </script>
+</body>
+</html>

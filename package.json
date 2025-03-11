@@ -1,0 +1,31 @@
+{
+  "name": "poke",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev:client": "vite",
+    "dev:server": "node server.js",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "build": "vite build",
+    "start": "node server.js",
+    "preview": "vite preview",
+    "postinstall": "if [[ \"$FLY_APP_NAME\" != *\"splitpot\"* ]]; then npm run build; fi"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "svelte": "^5.22.6"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "vite": "^6.2.1"
+  }
+}

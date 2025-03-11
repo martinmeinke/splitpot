@@ -1,0 +1,16 @@
+# netlify.toml - Configuration for Netlify deployment
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redirect all routes to index.html for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
+[build.environment]
+  # Set Node.js version for build
+  NODE_VERSION = "18"
+  VITE_BACKEND_URL = "https://splitpot.fly.dev:8080"
