@@ -1,6 +1,7 @@
 # Split Pot
 
 A real-time planning poker application built with Claude code, Svelte and Socket.io.
+Hosted at: [Split Pot](https://splitpot.netlify.app)
 
 ## Features
 
