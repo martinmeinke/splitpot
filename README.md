@@ -1,6 +1,6 @@
 # Split Pot
 
-A real-time Split Pot application built with Svelte and Socket.io.
+A real-time planning poker application built with Claude code, Svelte and Socket.io.
 
 ## Features
 
