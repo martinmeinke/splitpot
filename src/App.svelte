@@ -23,7 +23,7 @@
   let joinRoomId = $state(initialRoomId || "");
 
   // Card values
-  const cardValues = ["1", "2", "3", "5", "8", "13", "21", "34", "?"];
+  const cardValues = ["0.5", "1", "2", "3", "5", "8", "\u2615", "?"];
 
   function connectSocket() {
     // Make sure to disconnect any existing connection

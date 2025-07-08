@@ -97,7 +97,8 @@ The application is designed to be deployed as:
 1. Open the application in your browser
 2. Create a new room or join an existing one by entering the room ID
 3. Share the room ID with your team members
-4. Select your story point estimate by clicking on a card
+4. Select your story point estimate by clicking on a card (options range from
+   0.5 to 8, with ☕ indicating a coffee break)
 5. When everyone has voted, click "Reveal Votes" to show all estimates
 6. Click "Reset Votes" to start a new round
 

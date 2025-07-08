@@ -32,11 +32,11 @@
     
     const numericVotes = room.users
       .map(user => user.vote)
-      .filter(vote => !isNaN(parseInt(vote)));
+      .filter(vote => !isNaN(parseFloat(vote)));
     
     if (numericVotes.length === 0) return null;
     
-    const sum = numericVotes.reduce((total, vote) => total + parseInt(vote), 0);
+    const sum = numericVotes.reduce((total, vote) => total + parseFloat(vote), 0);
     return (sum / numericVotes.length).toFixed(1);
   }
   
