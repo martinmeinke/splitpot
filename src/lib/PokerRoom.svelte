@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import confetti from 'canvas-confetti';
   
   const { room, userName, roomId, cardValues } = $props();
   
@@ -13,6 +14,12 @@
   let hasVoted = $derived(currentUser && currentUser.vote !== null);
   let allVoted = $derived(room.users.length > 0 && room.users.every(user => user.vote !== null));
   let averageVote = $derived(calculateAverage());
+  let allVotesMatch = $derived(
+    room.revealed &&
+    room.users.length > 0 &&
+    room.users.every(user => user.vote !== null && user.vote === room.users[0].vote)
+  );
+  let confettiRunning = false;
   
   // Synchronize the selectedValue with the current user's vote
   $effect(() => {
@@ -54,6 +61,27 @@
       dispatch('vote', value);
     }
   }
+
+  function launchConfetti() {
+    confettiRunning = true;
+    const duration = 2000;
+    const end = Date.now() + duration;
+    (function frame() {
+      confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+      confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      } else {
+        confettiRunning = false;
+      }
+    })();
+  }
+
+  $effect(() => {
+    if (allVotesMatch && !confettiRunning) {
+      launchConfetti();
+    }
+  });
 </script>
 
 <div class="row">
